@@ -74,6 +74,9 @@ namespace Lego.Ev3.Core
 		OutputStepSync = 0xb0,
 		OutputTimeSync = 0xb1,
 
+        File = 0xC0,
+        Program_Start = 0x03,
+
 		Tst = 0xff,
 	}
 

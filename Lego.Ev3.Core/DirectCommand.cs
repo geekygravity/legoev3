@@ -938,6 +938,26 @@ Task<bool>
 			;
 		}
 
+        /// <summary>
+		/// Run a program on the brick
+		/// </summary>
+		/// <param name="filePath">Filepath on the brick of the program to run</param>
+		/// <returns></returns>
+		public
+#if WINRT
+		IAsyncAction
+#else
+        	Task
+#endif
+		StartProgramAsync(string filePath)
+		{
+			return StartProgramAsyncInternal(filePath)
+#if WINRT
+			.AsAsyncAction()
+#endif
+			;
+		}
+
 		internal async Task TurnMotorAtPowerAsyncInternal(OutputPort ports, int power)
 		{
 			Command c = new Command(CommandType.DirectNoReply);
@@ -1220,5 +1240,12 @@ Task<bool>
 			c.OutputReady(ports);
 			await _brick.SendCommandAsyncInternal(c);
 		}
-	}
+
+        internal async Task StartProgramAsyncInternal(string filePath)
+        {
+            Command c = new Command(CommandType.DirectNoReply);
+            c.StartProgram(filePath);
+            await _brick.SendCommandAsyncInternal(c);
+        }
+    }
 }

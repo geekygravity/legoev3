@@ -884,6 +884,25 @@ namespace Lego.Ev3.Core
 			AddParameter((byte)ports);	// ports
 		}
 
+        /// <summary>
+		/// Run a program on the brick
+		/// </summary>
+		/// <param name="filePath">Filepath on the brick of the program to run</param>
+		public void StartProgram(string filePath)
+		{
+			AddOpcode(Opcode.File);
+			AddRawParameter(0x08);      // File subcode command
+			AddRawParameter(0x01);      // User program slot
+			AddParameter(filePath);     // "../prjs/Project/Program.rbf"
+			AddRawParameter(0x40);      // LV0(0) // Set
+			AddRawParameter(0x44);      // LV0(4) // Set
+			AddRawParameter(0x03);      // Opcode.Program_Start
+			AddRawParameter(0x01);      // User program slot
+			AddRawParameter(0x40);      // LV0(0) // Get
+			AddRawParameter(0x44);      // LV0(4) // Get
+			AddRawParameter(0x00);      // Debug mode normal
+		}
+
 		/// <summary>
 		/// End and send a Command to the EV3 brick.
 		/// </summary>
